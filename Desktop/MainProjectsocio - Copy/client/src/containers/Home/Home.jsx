@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {  useNavigate, Navigate } from 'react-router-dom';
+import {  useNavigate, Navigate, Outlet } from 'react-router-dom';
 import Header from '../../components/common/Header'
+import UserSettings from '../../components/profile/UserSettings';
+import Protected from './Protected';
 
 
 
@@ -47,8 +49,7 @@ const Home = () => {
   return (
     <div>
       {/* <Header /> */}
-      {/* <UserProfile /> */}
-      {isLogged ? <Header/> : navigate("/") }
+      {isLogged ? <Protected element={<Outlet/>} /> : navigate("/") }
       {console.log(isLogged, 'isLogged')}
     </div>
   );

@@ -2,9 +2,18 @@ import Admin from "../models/User.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
-export const register = async (req, res, next) => { 
+export const register = async (req, res) => { 
+
+
+  
+
+
+
     try {
       const { username, email, password } = req.body;
+      const images=req.file
+
+      console.log(req.body,'body');
 
       if (!email) {
         return res.status(400).json({ message: "Email is required" });
@@ -19,6 +28,10 @@ export const register = async (req, res, next) => {
       if(!username){
         return res.status(400).json({message:"name is required"})
       }
+      if(!images){
+        return res.status(400).json({message:"Upload an image"})
+    }
+    const image=req.file.filename
       
 
 
@@ -28,7 +41,7 @@ export const register = async (req, res, next) => {
   
       const salt = bcrypt.genSaltSync(saltRounds);
       const hash = bcrypt.hashSync(password, salt);
-      const newAdmin = new Admin({ username, email, password: hash });
+      const newAdmin = new Admin({ username, email, password: hash,image:image });
       const savedAdmin = await newAdmin.save();
       res.status(200).json(savedAdmin);
     } catch (error) {
@@ -74,3 +87,15 @@ export const register = async (req, res, next) => {
       console.log(error);
     }
   };
+
+
+  export const getUser=async(req,res)=>{
+    const { id } = req.params
+    try {
+      let getUser=await Admin.findById(id)
+      res.status(201).json(getUser)
+    } catch (error) {
+      res.status(404).json({message:error.message || null});
+      
+    }
+  }

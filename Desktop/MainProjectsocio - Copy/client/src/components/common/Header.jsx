@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Settings from "../profile/Settings/Settings";
 
-const Navbar = () => {
+const Navbar = ({element}) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -42,27 +44,36 @@ const Navbar = () => {
                 // } `}
               >
                 <ul className="block lg:flex">
+                  <Link to={'/home'}>
                   <ListItem >Home</ListItem>
-                  <ListItem >Payment</ListItem>
-                  <ListItem >About</ListItem>
+                  
+                  </Link>
+                  <Link to={'posts'}>
+                  <ListItem >Posts</ListItem>
+                  </Link>
+                  <Link to={'settings'}>
+                  <ListItem >Profile</ListItem>
+                  </Link>
                   <ListItem >Blog</ListItem>
                 </ul>
               </nav>
             </div>
             <div className="hidden justify-end pr-16 sm:flex lg:pr-0">
               <a
-                // href="/#"
+                href="/#"
                 className="px-7 py-3 text-base font-medium text-dark hover:text-primary dark:text-white text-decoration-none "
               >
-                Sign in
+                Sign out
               </a>
+              <Link to={'settings'}>
 
-              <a
-                // href="/#"
+              <button
+                
                 className="rounded-md bg-primary px-7 py-3 text-base font-medium text-white hover:bg-primary/90 text-decoration-none "
               >
-                Sign Up
-              </a>
+                Settings
+              </button>
+              </Link>
             </div>
           </div>
         </div>

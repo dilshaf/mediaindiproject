@@ -1,13 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
+import Searchsession from './Searchsession';
+import FriendsList from './FriendsList';
+import axios from 'axios'
+import { getUserById } from '../../services/apiService';
 
 export default function Basic() {
+ 
+  
+  const [data,setData] = useState({})
+
+  const fetchData = async()=>{
+    const response = await getUserById()
+    setData(response)
+    console.log(response,'response');
+  }
+
+  useEffect(()=>{
+    fetchData()
+  },[])
+
+
+ 
+
+
+  
   return (
-    <div className="vh-100" >
-      <MDBContainer>
-        <MDBRow className="justify-content-center">
-          <MDBCol md="9" lg="7" xl="5" className="mt-5">
-            <MDBCard style={{ borderRadius: '15px',marginLeft:"-26rem",width:"103%" }}>
+    <div className="vh-100" style={{marginLeft: '-8rem'}}  >
+    
+      <MDBContainer >
+        <MDBRow className="justify-content-center" >
+          <MDBCol md="9" lg="7" xl="5" className="mt-5" >
+            <MDBCard style={{ borderRadius: '15px' }} >
               <MDBCardBody className="p-4">
                 <div className="d-flex text-black">
                   <div className="flex-shrink-0">
@@ -18,8 +42,8 @@ export default function Basic() {
                       fluid />
                   </div>
                   <div className="flex-grow-1 ms-3">
-                    <MDBCardTitle>Danny McLoan</MDBCardTitle>
-                    <MDBCardText>Senior Journalist</MDBCardText>
+                    <MDBCardTitle>{data.username}</MDBCardTitle>
+                    <MDBCardText>{data.email}</MDBCardText>
 
                     <div className="d-flex justify-content-start rounded-3 p-2 mb-2"
                       style={{ backgroundColor: '#efefef' }}>
@@ -47,6 +71,16 @@ export default function Basic() {
           </MDBCol>
         </MDBRow>
       </MDBContainer>
+       
+      <div>
+
+      
+      </div>
+
+      <div>
+        <FriendsList/>
+      </div>
+
     </div>
   );
 }

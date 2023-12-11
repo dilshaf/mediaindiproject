@@ -7,28 +7,45 @@ import  axios from "axios";
 
 export default function Example() {
 
-  const [form,setForm] = useState({
+  const [formData,setFormData] = useState({
     username:"",
     password:"",
-    email:""
+    email:"",
+    image:"",
   })
   const navigate=useNavigate()
 
-  const handleChange = (e)=>{
+ 
 
-    const { value,name} = e.target
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    setForm({...form,[name]:value})
+ 
 
-  }
+  
+  const handleImageChange = (e) => {
+    
+    setFormData({ ...formData,image: e.target.files[0] });
+  };
 
   const handleSubmitData = async (e) => {
     e.preventDefault();
 
-    console.log(form);
+    console.log('Form Data:', formData);
+
+    const data = new FormData();
+    data.append('username', formData.username);
+    data.append('email', formData.email);
+    data.append('password', formData.password);
+    data.append('image',formData.image);
+    // console.log(formData.image,'poiuyt');
+    console.log(data,"data");
+    
     try {
-      const response = await axios.post( "http://localhost:5000/api/admin/register",
-        form
+      const response = await axios.post("http://localhost:5000/api/admin/register",
+        data
+        
         );
 
         console.log(response,'response');
@@ -59,7 +76,7 @@ export default function Example() {
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form onSubmit={handleSubmitData} className="space-y-6" action="#" method="POST">
+            <form onSubmit={handleSubmitData}  className="space-y-6" action="#" method="POST">
             <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Username
@@ -70,8 +87,8 @@ export default function Example() {
                     type="text"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    value={form.username}
-                    onChange={handleChange}
+                    value={formData.username}
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>    
@@ -87,12 +104,34 @@ export default function Example() {
                     autoComplete="email"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    value={form.email}
-                    onChange={handleChange}
+                    value={formData.email}
+                    onChange={handleInputChange}
 
                   />
                 </div>
+
               </div>
+
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                  Photo upload
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="pic"
+                    name="pic"
+                    type="file"
+                    autoComplete="file"
+                    accept="image/*"
+                    required
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    // value={formData.image}
+                    onChange={handleImageChange}
+
+                  />
+                </div>
+                </div>
   
               <div>
                 <div className="flex items-center justify-between">
@@ -113,8 +152,8 @@ export default function Example() {
                     autoComplete="current-password"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    value={form.password}
-                    onChange={handleChange}
+                    value={formData.password}
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>

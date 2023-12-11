@@ -1,36 +1,36 @@
-import React from 'react'
-import './UserSettings.css'
+import React from "react";
+import "./UserSettings.css";
+import Header from "../common/Header";
+import UserProfile from "../profile/UserProfile";
 
-const UserSettings = () => {
+import Footer from "../common/Footer";
+
+const UserSettings = ({ element }) => {
   return (
     <div>
-        <div class="parent">
-        {/* <div class="div1">
-            <h1>header</h1>
-
-        </div> */}
-        <div class="div2">
-            
-            <div class="div3">
-                <h1>content</h1>
-
-            </div>
-            <div class="div4">
-                <div class="div5">
-
-                </div>
-                <div class="div6">
-                    
-                </div>
-
-                
-
-            </div>
-
+      <div className="parent">
+        <div className="div1">
+          <Header />
         </div>
-    </div>
-    </div>
-  )
-}
+        <div className="div2">
+          <UserProfile />
+          <div
+            className="flex-1"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            {element}
+          </div>
+        </div>
+      </div>
 
-export default UserSettings
+      {/* <Footer /> */}
+    </div>
+  );
+};
+
+export default UserSettings;

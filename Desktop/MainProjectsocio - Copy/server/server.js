@@ -5,6 +5,9 @@ import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import morgan from 'morgan'
 import router from './routes/authRoutes.js'
+import Postrouter from './routes/postRoutes.js'
+// import router from './routes/postRoutes.js'
+import Profilerouter from './routes/updateprofileRoutes.js'
 
 const app=express()
 app.use(cors())
@@ -18,6 +21,8 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 
 app.use('/api/admin',router)
+app.use('/posts',Postrouter)
+app.use('/api',Profilerouter)
 
 
 //MONGODB CONNECT
